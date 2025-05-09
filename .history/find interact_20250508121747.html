@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交互动画</title>
+    <style>
+        @viewport {
+            width: device-width;
+            zoom: 1.0;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            background-color: #6C6BB9;  /* 保持与原页面背景色一致 */
+        }
+
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;  /* 初始隐藏 */
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+        }
+
+        .video-container.active {
+            display: flex;
+        }
+
+        video {
+            position: relative;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 1001;
+            transition: all 0.3s ease;
+        }
+
+        .close-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        @media (orientation: portrait) {
+            video {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        @media (orientation: landscape) {
+            video {
+                width: auto;
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 视频容器 -->
+    <div class="video-container">
+        <button class="close-button">×</button>
+        <video playsinline autoplay muted>
+            <source src="findmovie.mp4" type="video/mp4">
+            您的浏览器不支持 video 标签
+        </video>
+    </div>
+
+    <script>
+        const videoContainer = document.querySelector('.video-container');
+        const video = document.querySelector('video');
+        const closeButton = document.querySelector('.close-button');
+
+        // 添加触发视频播放的函数
+        function showVideo() {
+            videoContainer.classList.add('active');
+            video.play();
+            
+            // 尝试请求全屏
+            if (videoContainer.requestFullscreen) {
+                videoContainer.requestFullscreen();
+            } else if (videoContainer.webkitRequestFullscreen) {
+                videoContainer.webkitRequestFullscreen();
+            } else if (videoContainer.msRequestFullscreen) {
+                videoContainer.msRequestFullscreen();
+            }
+        }
+
+        // 关闭视频函数
+        function closeVideo() {
+            videoContainer.classList.remove('active');
+            video.pause();
+            video.currentTime = 0;
+            
+            // 退出全屏
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+
+        // 绑定关闭按钮事件
+        closeButton.addEventListener('click', closeVideo);
+
+        // ESC 键关闭
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeVideo();
+            }
+        });
+
+        // 视频结束后自动关闭
+        video.addEventListener('ended', closeVideo);
+
+        // 页面加载完成后自动播放
+        document.addEventListener('DOMContentLoaded', function() {
+            showVideo();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      background:#6C6BB9;
+      min-height:100vh;
+      font-family:'PingFang SC','Microsoft YaHei',sans-serif;
+      overflow-x:hidden;
+    }
+
+    /* ---------- 头部导航 ---------- */
+    .header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:20px 50px;
+      position:fixed;
+      top:0;left:0;right:0;
+      z-index:100;
+    }
+    .logo{width:75.892px;height:87.633px;object-fit:contain;}
+
+    .nav-container{position:relative;width:1076px;height:80px;}
+    .nav-icons{
+      position:absolute;top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      display:flex;justify-content:space-between;
+      width:60%;z-index:2;
+    }
+    .nav-icon{
+      flex-shrink:0;
+      cursor:pointer;
+      filter:drop-shadow(0 0 1px #000);
+      transition:transform .3s ease;
+    }
+    .nav-icon:hover{transform:scale(1.1);}
+    .find-icon{width:37px;height:39px;}
+    .mine-icon{width:40px;height:39px;}
+    .shelf-icon{width:34px;height:39px;}
+
+    /* ---------- 六边形交互 ---------- */
+    .content-center{
+      position:absolute;top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      width:100%;
+      display:flex;justify-content:center;align-items:center;
+      pointer-events:none;   /* 允许下方 hex-container 获得点击 */
+    }
+    .hex-container{
+      position:relative;
+      width:600px;height:600px;
+      pointer-events:auto;   /* 开启点击 */
+    }
+
+    .hexagon{
+      position:absolute;
+      transform:translate(-50%,-50%);
+      cursor:pointer;
+      transition:transform .3s ease;
+    }
+    .hexagon:hover{transform:translate(-50%,-50%) scale(1.08);}
+
+    .layer1{
+      width:640px;          /* 只固定宽度 */
+      height:auto;          /* 高度自适应以保持原图比例 */
+      left:50%;
+      top:50%;
+    }
+    .layer2{
+      width:120px;          /* 只固定宽度 */
+      height:auto;          /* 高度自适应以保持原图比例 */
+    }
+    .layer3{width:70px;height:70px;}
+
+    /* 第二层 6 个位置 */
+    .pos-0{left:50%;top:10%;}
+    .pos-1{left:80%;top:30%;}
+    .pos-2{left:80%;top:70%;}
+    .pos-3{left:50%;top:90%;}
+    .pos-4{left:20%;top:70%;}
+    .pos-5{left:20%;top:30%;}
+
+    /* 第三层 6 个位置（稍微再外一圈） */
+    .layer3.pos-0{left:50%;top:5%;}
+    .layer3.pos-1{left:90%;top:20%;}
+    .layer3.pos-2{left:90%;top:80%;}
+    .layer3.pos-3{left:50%;top:95%;}
+    .layer3.pos-4{left:10%;top:80%;}
+    .layer3.pos-5{left:10%;top:20%;}
+
+    .hidden{display:none;}
+
+    /* ---------- 底部装饰 ---------- */
+    .bottom-decoration{
+      position:fixed;bottom:0;left:50%;
+      transform:translateX(-50%);
+      width:1526px;height:859px;
+      background:url('homepage frame1.png') bottom center no-repeat;
+      background-size:contain;
+      z-index:1;
+      animation:breath-animation 4s ease-in-out infinite;
+      pointer-events:none;   /* 不抢点击 */
+    }
+    .decoration-frame2{
+      position:fixed;bottom:0;left:50%;
+      transform:translateX(-50%);
+      width:775px;height:155px;
+      background:url('homepageframe2.png') center no-repeat;
+      background-size:contain;
+      z-index:2;
+      animation:breath-animation 4s ease-in-out infinite;
+      pointer-events:none;
+    }
+
+    @keyframes breath-animation{
+      0%,100%{opacity:.9;transform:translateX(-50%) scale(1);}
+      50%{opacity:1;transform:translateX(-50%) scale(1.02);}
+    }
+    /* ---- Intro Section ---- */
+    .intro-section{
+      position:fixed;
+      top:0;left:0;right:0;bottom:0;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background:rgba(108,107,185,0.4);
+      backdrop-filter:blur(10px);
+      z-index:200;
+    }
+    .frosted-box{
+      background:rgba(255,255,255,0.25);
+      border-radius:20px;
+      padding:40px 30px;
+      width:70%;
+      max-width:500px;
+      backdrop-filter:blur(15px);
+      box-shadow:0 8px 30px rgba(0,0,0,0.3);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+    .question-input{
+      width:100%;
+      padding:12px 16px;
+      border:none;
+      border-radius:10px;
+      font-size:18px;
+      margin-bottom:24px;
+      outline:none;
+    }
+    .submit-btn{
+      padding:10px 28px;
+      border:none;
+      border-radius:8px;
+      background:#4A49A5;
+      color:#fff;
+      font-size:18px;
+      cursor:pointer;
+      transition:background 0.3s;
+    }
+    .submit-btn:hover{background:#5E5DD1;}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <img src="logo.png" alt="巴别插画 Logo" class="logo">
+    <div class="nav-container">
+      <img src="navigate background.png" alt="导航栏" class="nav-background">
+      <div class="nav-icons">
+        <a href="find.html"><img src="find.png" alt="搜索" class="nav-icon find-icon"></a>
+        <a href="mine.html"><img src="mine.png" alt="我的" class="nav-icon mine-icon"></a>
+        <a href="shelf.html"><img src="shelf.png" alt="书架" class="nav-icon shelf-icon"></a>
+      </div>
+    </div>
+    <div style="width:150px;"></div>
+  </header>
+
+  <!-- Intro Section with frosted glass question box -->
+  <div class="intro-section" id="introSection">
+    <div class="frosted-box">
+      <input type="text" id="userQuestion" class="question-input" placeholder="Type your question here...">
+      <button id="submitQuestion" class="submit-btn">Submit</button>
+    </div>
+  </div>
+
+  <!-- 六边形层级 -->
+  <div class="content-center hidden">
+    <div class="hex-container">
+      <!-- 第一层 -->
+      <img src="find1.png" id="layer1Hex" class="hexagon layer1" alt="第一层六边形">
+      <!-- 第二层 -->
+      <div id="layer2Group" class="hidden">
+        <img src="find2.png" class="hexagon layer2 pos-0" alt="">
+        <img src="find2.png" class="hexagon layer2 pos-1" alt="">
+        <img src="find2.png" class="hexagon layer2 pos-2" alt="">
+        <img src="find2.png" class="hexagon layer2 pos-3" alt="">
+        <img src="find2.png" class="hexagon layer2 pos-4" alt="">
+        <img src="find2.png" class="hexagon layer2 pos-5" alt="">
+      </div>
+      <!-- 第三层 -->
+      <div id="layer3Group" class="hidden">
+        <img src="find3.png" class="hexagon layer3 pos-0" alt="">
+        <img src="find3.png" class="hexagon layer3 pos-1" alt="">
+        <img src="find3.png" class="hexagon layer3 pos-2" alt="">
+        <img src="find3.png" class="hexagon layer3 pos-3" alt="">
+        <img src="find3.png" class="hexagon layer3 pos-4" alt="">
+        <img src="find3.png" class="hexagon layer3 pos-5" alt="">
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-decoration"></div>
+  <div class="decoration-frame2"></div>
+
+  <script>
+    // Intro section handling
+    const intro = document.getElementById('introSection');
+    const submitBtn = document.getElementById('submitQuestion');
+    const contentCenter = document.querySelector('.content-center');
+
+    submitBtn.addEventListener('click', () => {
+      const q = document.getElementById('userQuestion').value.trim();
+      // You could store `q` here if needed
+      intro.style.display = 'none';           // Hide intro overlay
+      contentCenter.classList.remove('hidden'); // Show hexagon interface
+    });
+
+    const layer1 = document.getElementById('layer1Hex');
+    const layer2Group = document.getElementById('layer2Group');
+    const layer3Group = document.getElementById('layer3Group');
+
+    // 第一层 -> 第二层（保留第一层图片）
+    layer1.addEventListener('click', () => {
+      layer2Group.classList.remove('hidden');   // 展开第二层
+      layer1.style.pointerEvents = 'none';      // 阻止后续再次点击
+    });
+
+    // 第二层 -> 第三层（不隐藏第二层）
+    layer2Group.querySelectorAll('img').forEach(hex => {
+      hex.addEventListener('click', () => {
+        layer3Group.classList.remove('hidden');  // 展开第三层
+      });
+    });
+
+    // 第三层 -> 跳转 answer.html
+    layer3Group.querySelectorAll('img').forEach(hex => {
+      hex.addEventListener('click', () => {
+        window.location.href = 'answer.html';
+      });
+    });
+  </script>
+</body>
+</html>

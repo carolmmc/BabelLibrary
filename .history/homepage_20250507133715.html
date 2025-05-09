@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BABEL LIBRARY</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #6C6BB9;
+            min-height: 100vh;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            width: 75.892px;
+            height: 87.633px;
+            flex-shrink: 0;
+            object-fit: contain; /* 保持图片比例 */
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-tabs a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: opacity 0.3s;
+        }
+
+        .nav-tabs a:hover {
+            opacity: 0.8;
+        }
+
+        .content-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+        }
+
+        .title {
+            font-size: 64px;
+            color: white;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .start-btn {
+            padding: 15px 60px;
+            font-size: 24px;
+            background: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #6C6BB9;
+            font-weight: bold;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .title-image {
+            max-width: 800px; 
+            width: 80%;
+            height: auto;
+            margin: 0 auto 40px;
+            display: block;
+            filter: drop-shadow(0px 0px 84.5px rgba(0, 0, 0, 0.43));  /* 添加阴影效果 */
+        }
+
+        .title-text {
+            color: #E4E4FF;
+            text-align: center;
+            text-shadow: 0px 0px 84.5px rgba(0, 0, 0, 0.43);
+            -webkit-text-stroke: 1px #000;
+            font-family: Poppins, sans-serif; 
+            font-size: 128px;
+            font-weight: 700;
+            line-height: normal;
+            margin-bottom: 40px;
+        }
+
+        /* 添加 Poppins 字体 */
+        @font-face {
+            font-family: 'Poppins';
+            src: url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+        }
+
+        /* 底部装饰图样式 */
+        .bottom-decoration {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1526px;
+            height: 859px;
+            flex-shrink: 0;
+            aspect-ratio: 1526/859;
+            background: url('homepage frame1.png') lightgray 50% / cover no-repeat;
+            z-index: 1;
+            animation: breath-animation 4s ease-in-out infinite;
+        }
+
+        /* 呼吸动画效果 */
+        @keyframes breath-animation {
+            0%, 100% {
+                opacity: 0.9;
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1.02);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <img src="logo.png" alt="巴别插画 Logo" class="logo">
+        <nav class="nav-tabs">
+            <a href="#">首页</a>
+            <a href="#">作品</a>
+            <a href="#">关于我们</a>
+            <a href="#">联系</a>
+        </nav>
+        <div style="width: 150px;"></div>
+    </header>
+
+    <div class="content-center">
+        <img src="babel library.png" alt="巴别插画" class="title-image">
+        <button class="start-btn">开始探索</button>
+    </div>
+    <div class="bottom-decoration"></div>
+</body>
+</html>

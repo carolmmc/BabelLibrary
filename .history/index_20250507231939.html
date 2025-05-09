@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>开屏动画</title>
+    <style>
+        /* 优化视口设置 */
+        @viewport {
+            width: device-width;
+            zoom: 1.0;
+        }
+
+        /* 基础样式重置 */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* 使用视口高度 */
+            width: 100vw;  /* 使用视口宽度 */
+            overflow: hidden; /* 防止出现滚动条 */
+            background-color: black;
+        }
+
+        /* 视频容器样式 */
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* 优化视频样式 */
+        video {
+            position: absolute;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            object-fit: contain; /* 改为 contain 以保持完整显示 */
+        }
+
+        /* 媒体查询适配不同屏幕 */
+        @media (orientation: portrait) {
+            video {
+                width: 100%;
+                height: auto;
+            }
+        }
+
+        @media (orientation: landscape) {
+            video {
+                width: auto;
+                height: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video autoplay muted playsinline>
+            <source src="openanimation.mp4" type="video/mp4">
+        </video>
+    </div>
+    <script>
+        const video = document.querySelector('video');
+        
+        // 优化视频加载和播放
+        video.addEventListener('loadedmetadata', () => {
+            // 确保视频尺寸正确设置
+            video.style.opacity = '1';
+        });
+
+        video.addEventListener('ended', function() {
+            // 添加淡出效果
+            video.style.opacity = '0';
+            video.style.transition = 'opacity 0.3s ease-out';
+            
+            setTimeout(() => {
+                window.location.href = 'homepage.html';
+            }, 300);
+        });
+    </script>
+</body>
+</html>
+

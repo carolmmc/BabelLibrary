@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #6C6BB9;
+            min-height: 100vh;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            width: 75.892px;
+            height: 87.633px;
+            flex-shrink: 0;
+            object-fit: contain; /* 保持图片比例 */
+        }
+
+        /* 导航栏容器 */
+        .nav-container {
+            position: relative;
+            width: 1076px;
+            height: 80px;
+        }
+
+        /* 导航图标容器 */
+        .nav-icons {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: space-between; /* 改用 space-between 实现均匀分布 */
+            width: 60%; /* 控制图标分布的整体宽度范围 */
+            z-index: 2;
+        }
+
+        /* 导航图标通用样式 */
+        .nav-icon {
+            flex-shrink: 0;
+            cursor: pointer;
+            filter: drop-shadow(0px 0px 1px #000);
+            transition: transform 0.3s ease; /* 将过渡效果移到这里 */
+        }
+
+        /* 搜索图标 */
+        .find-icon {
+            width: 37px;
+            height: 39px;
+        }
+
+        /* 我的图标 */
+        .mine-icon {
+            width: 40px;
+            height: 39px;
+        }
+
+        /* 书架图标 */
+        .shelf-icon {
+            width: 34px;
+            height: 39px;
+        }
+
+        /* 图标悬停效果 */
+        .nav-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .content-center {
+            position: absolute;
+            top: 80%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        /* 底部装饰图样式 */
+        .bottom-decoration {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);  /* 居中定位 */
+            width: 1526px;  /* 使用原始宽度 */
+            height: 859px;  /* 使用原始高度 */
+            background: url('homepage frame1.png') bottom center no-repeat;
+            background-size: contain;  /* 确保图片完整显示 */
+            z-index: 1;
+            animation: breath-animation 4s ease-in-out infinite;
+        }
+
+        /* 添加第二个装饰图样式 */
+        .decoration-frame2 {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 775px;
+            height: 155px;
+            flex-shrink: 0;
+            aspect-ratio: 5/1;
+            background: url('homepageframe2.png') center no-repeat;
+            background-size: contain;
+            z-index: 2; /* 确保显示在第一个装饰图之上 */
+            animation: breath-animation 4s ease-in-out infinite;
+        }
+
+        /* 修改呼吸动画 */
+        @keyframes breath-animation {
+            0%, 100% {
+                opacity: 0.9;
+                transform: translateX(-50%) scale(1);  /* 保持居中的同时缩放 */
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1.02);
+            }
+        }
+
+        .login-container {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            z-index: 3;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-button {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .form-switch {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+        }
+
+        .form-switch a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            margin-left: 5px;
+        }
+
+        .form-switch a:hover {
+            text-decoration: underline;
+        }
+
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .tab-button {
+            padding: 10px 30px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            opacity: 1;
+            border-bottom: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <img src="logo.png" alt="巴别插画 Logo" class="logo">
+        <div class="nav-container">
+            <img src="navigate background.png" alt="导航栏" class="nav-background">
+            <div class="nav-icons">
+                <img src="find.png" alt="搜索" class="nav-icon find-icon">
+                <img src="mine.png" alt="我的" class="nav-icon mine-icon">
+                <img src="shelf.png" alt="书架" class="nav-icon shelf-icon">
+            </div>
+        </div>
+        <div style="width: 150px;"></div>
+    </div>
+    <div class="content-center">
+        <div class="login-container">
+            <div class="tab-container">
+                <button class="tab-button active" onclick="switchTab('login')">登录</button>
+                <button class="tab-button" onclick="switchTab('register')">注册</button>
+            </div>
+            
+            <!-- 登录表单 -->
+            <form id="loginForm" class="form">
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="用户名/邮箱" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="密码" required>
+                </div>
+                <button type="submit" class="form-button">登录</button>
+                <div class="form-switch">
+                    忘记密码？<a href="#">点击这里</a>
+                </div>
+            </form>
+
+            <!-- 注册表单 -->
+            <form id="registerForm" class="form" style="display: none;">
+                <div class="form-group">
+                    <input type="email" class="form-input" placeholder="邮箱" required>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-input" placeholder="用户名" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="密码" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-input" placeholder="确认密码" required>
+                </div>
+                <button type="submit" class="form-button">注册</button>
+            </form>
+        </div>
+    </div>
+    <div class="bottom-decoration"></div>
+    <div class="decoration-frame2"></div>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #6C6BB9;
+            min-height: 100vh;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            width: 75.892px;
+            height: 87.633px;
+            flex-shrink: 0;
+            object-fit: contain; /* 保持图片比例 */
+        }
+
+        /* 导航栏容器 */
+        .nav-container {
+            position: relative;
+            width: 1076px;
+            height: 80px;
+        }
+
+        /* 导航图标容器 */
+        .nav-icons {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: space-between; /* 改用 space-between 实现均匀分布 */
+            width: 60%; /* 控制图标分布的整体宽度范围 */
+            z-index: 2;
+        }
+
+        /* 导航图标通用样式 */
+        .nav-icon {
+            flex-shrink: 0;
+            cursor: pointer;
+            filter: drop-shadow(0px 0px 1px #000);
+            transition: transform 0.3s ease; /* 将过渡效果移到这里 */
+        }
+
+        /* 搜索图标 */
+        .find-icon {
+            width: 37px;
+            height: 39px;
+        }
+
+        /* 我的图标 */
+        .mine-icon {
+            width: 40px;
+            height: 39px;
+        }
+
+        /* 书架图标 */
+        .shelf-icon {
+            width: 34px;
+            height: 39px;
+        }
+
+        /* 图标悬停效果 */
+        .nav-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .content-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* 添加书架图片容器样式 */
+        .shelf-image-container {
+            position: relative;  /* 添加相对定位 */
+            width: 1339px; 
+            height: 754px; 
+            flex-shrink: 0;
+            aspect-ratio: 279/157;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* 书架主图样式 */
+        .shelf-main-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* 猫咪容器样式 */
+        .cat-container {
+            position: absolute;
+            top: 20px;  /* 调整猫咪在书架上方的位置 */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            animation: swingAnimation 3s ease-in-out infinite;
+        }
+
+        /* 猫咪图片样式 */
+        .cat-image {
+            width: 1264px;
+            height: 711px;
+            flex-shrink: 0;
+            aspect-ratio: 16/9;
+        }
+
+        /* 摇晃动画关键帧 */
+        @keyframes swingAnimation {
+            0% {
+                transform: translateX(-50%) rotate(-2deg);
+            }
+            50% {
+                transform: translateX(-50%) rotate(2deg);
+            }
+            100% {
+                transform: translateX(-50%) rotate(-2deg);
+            }
+        }
+
+        /* 底部装饰图样式 */
+        .bottom-decoration {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);  /* 居中定位 */
+            width: 1526px;  /* 使用原始宽度 */
+            height: 859px;  /* 使用原始高度 */
+            background: url('homepage frame1.png') bottom center no-repeat;
+            background-size: contain;  /* 确保图片完整显示 */
+            z-index: 1;
+            animation: breath-animation 4s ease-in-out infinite;
+        }
+
+        /* 添加第二个装饰图样式 */
+        .decoration-frame2 {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 775px;
+            height: 155px;
+            flex-shrink: 0;
+            aspect-ratio: 5/1;
+            background: url('homepageframe2.png') center no-repeat;
+            background-size: contain;
+            z-index: 2; /* 确保显示在第一个装饰图之上 */
+            animation: breath-animation 4s ease-in-out infinite;
+        }
+
+        /* 修改呼吸动画 */
+        @keyframes breath-animation {
+            0%, 100% {
+                opacity: 0.9;
+                transform: translateX(-50%) scale(1);  /* 保持居中的同时缩放 */
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1.02);
+            }
+        }
+
+        .text-input-container {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+
+        .center-text-input {
+            width: 400px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 2px solid #ccc;
+            font-size: 16px;
+            font-family: inherit;
+        }
+
+        .text-output-container {
+            position: absolute;
+            left: 50%;
+            top: 47%;  /* 调整到中下部分 */
+            transform: translateX(-50%);
+            z-index: 5;
+            text-align: center;
+            width: auto;  /* 让宽度自适应内容 */
+        }
+
+        .text-output {
+            color: #6C6BB9;
+            font-family: 'Poppins', sans-serif;
+            font-size: 24px;
+            font-weight: 400;
+            letter-spacing: 2.16px;
+            line-height: 1.5;  /* 调整行高 */
+            margin: 5px 0;  /* 减小行间距 */
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .page-nav {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .right-nav {
+            right: 40px;
+        }
+
+        /* 左侧导航按钮位置 */
+        .left-nav {
+            left: 40px;
+        }
+
+        .page-nav:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .page-nav svg {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <img src="logo.png" alt="巴别插画 Logo" class="logo">
+        <div class="nav-container">
+            <img src="navigate background.png" alt="导航栏" class="nav-background">
+            <div class="nav-icons">
+                <img src="find.png" alt="搜索" class="nav-icon find-icon">
+                <img src="mine.png" alt="我的" class="nav-icon mine-icon">
+                <img src="shelf.png" alt="书架" class="nav-icon shelf-icon">
+            </div>
+        </div>
+        <div style="width: 150px;"></div>
+    </header>
+
+    <div class="content-center">
+        <div class="shelf-container">
+            <div class="shelf-image-container">
+                <div class="cat-container">
+                    <img src="shelf cat.png" alt="猫咪" class="cat-image">
+                </div>
+                <img src="shelf1.png" alt="书架" class="shelf-main-image">
+                <!-- 将文字容器移到这里 -->
+                <div class="text-output-container">
+                    <p class="text-output">Q：this game i can get ssr</p>
+                    <p class="text-output">A：believe yourself</p>
+                </div>
+            </div>
+        </div>
+        <!-- 添加左侧翻页按钮 -->
+        <div class="page-nav left-nav">
+            <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" fill="none">
+                <path d="M22 14L14 22M14 22L22 30M14 22H30M42 22C42 33.0457 33.0457 42 22 42C10.9543 42 2 33.0457 2 22C2 10.9543 10.9543 2 22 2C33.0457 2 42 10.9543 42 22Z" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <!-- 修改右侧翻页按钮的 SVG 代码 -->
+        <div class="page-nav right-nav">
+            <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 44 44" fill="none">
+                <path d="M22 30L30 22M30 22L22 14M30 22H14M42 22C42 33.0457 33.0457 42 22 42C10.9543 42 2 33.0457 2 22C10.9543 2 22 2C33.0457 2 42 10.9543 42 22Z" stroke="white" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+    </div>
+    <div class="bottom-decoration"></div>
+    <div class="decoration-frame2"></div>
+</body>
+</html>

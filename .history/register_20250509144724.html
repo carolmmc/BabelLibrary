@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册 - 巴别插画</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #6C6BB9;
+            min-height: 100vh;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        .register-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            width: 400px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            z-index: 3;
+        }
+
+        .register-title {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .back-to-login {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-to-login a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-to-login a:hover {
+            text-decoration: underline;
+        }
+
+        /* 复用原有的底部装饰样式 */
+        .bottom-decoration {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1526px;
+            height: 859px;
+            background: url('homepage frame1.png') bottom center no-repeat;
+            background-size: contain;
+            z-index: 1;
+            animation: breath-animation 4s ease-in-out infinite;
+        }
+
+        .decoration-frame2 {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 775px;
+            height: 155px;
+            flex-shrink: 0;
+            aspect-ratio: 5/1;
+            background: url('homepageframe2.png') center no-repeat;
+            background-size: contain;
+            z-index: 2;
+            animation: breath-animation 4s ease-in-out infinite;
+        }
+
+        @keyframes breath-animation {
+            0%, 100% {
+                opacity: 0.9;
+                transform: translateX(-50%) scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1.02);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2 class="register-title">创建账号</h2>
+        <form id="registerForm">
+            <div class="form-group">
+                <label class="form-label">电子邮箱</label>
+                <input type="email" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">用户名</label>
+                <input type="text" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">密码</label>
+                <input type="password" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label">确认密码</label>
+                <input type="password" class="form-input" required>
+            </div>
+            <button type="submit" class="submit-btn">注册</button>
+            <div class="back-to-login">
+                <a href="find 登陆页.html">已有账号？返回登录</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- 底部装饰 -->
+    <div class="bottom-decoration"></div>
+    <div class="decoration-frame2"></div>
+
+    <script>
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // 这里添加注册逻辑
+            console.log('注册表单提交');
+        });
+    </script>
+</body>
+</html>

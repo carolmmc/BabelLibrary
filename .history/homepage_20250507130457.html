@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BABEL LIBRARY</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #6C6BB9;
+            min-height: 100vh;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            width: 75.892px;
+            height: 87.633px;
+            flex-shrink: 0;
+            object-fit: contain; /* 保持图片比例 */
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-tabs a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: opacity 0.3s;
+        }
+
+        .nav-tabs a:hover {
+            opacity: 0.8;
+        }
+
+        .content-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            width: 100%;
+        }
+
+        .title {
+            font-size: 64px;
+            color: white;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        .start-btn {
+            padding: 15px 60px;
+            font-size: 24px;
+            background: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: #6C6BB9;
+            font-weight: bold;
+        }
+
+        .start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <img src="logo.png" alt="巴别插画 Logo" class="logo">
+        <nav class="nav-tabs">
+            <a href="#">首页</a>
+            <a href="#">作品</a>
+            <a href="#">关于我们</a>
+            <a href="#">联系</a>
+        </nav>
+        <div style="width: 150px;"></div>
+    </header>
+
+    <div class="content-center">
+        <h1 class="title">巴别插画</h1>
+        <button class="start-btn">开始探索</button>
+    </div>
+</body>
+</html>
