@@ -306,6 +306,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const startSection = document.querySelector('.start-section');
+            let isTransitioning = false;
+
             // 页面加载后 2 秒自动进入主界面
             setTimeout(() => {
                 if (!isTransitioning) {
@@ -314,8 +317,6 @@
                     setTimeout(() => isTransitioning = false, 800);
                 }
             }, 2000);
-            const startSection = document.querySelector('.start-section');
-            let isTransitioning = false;
 
             function handleScroll(e) {
                 if (isTransitioning) return;
