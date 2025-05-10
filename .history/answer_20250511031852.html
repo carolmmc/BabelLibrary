@@ -197,9 +197,7 @@
 </head>
 <body>
     <header class="header">
-        <a href="homepage.html">
-            <img src="logo.png" alt="巴别插画 Logo" class="logo">
-        </a>
+        <img src="logo.png" alt="巴别插画 Logo" class="logo">
         <div class="nav-container">
             <img src="navigate background.png" alt="导航栏" class="nav-background">
             <div class="nav-icons">
@@ -278,7 +276,7 @@
   img1.addEventListener('click', () => {
     img1.style.display = 'none';
     img2.style.display = 'block';
-    const question = prompt('Please silently repeat your question in your mind, or enter a question to get a more accurate answer：');
+    const question = prompt('请在心中默念你的问题，或输入一个问题以获得更精准的回答：');
     const topic = detectTopic(question || '');
     const pool = answers[topic] || answers.general;
     const result = pool[Math.floor(Math.random() * pool.length)];
